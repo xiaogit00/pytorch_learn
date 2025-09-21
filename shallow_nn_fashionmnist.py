@@ -39,8 +39,7 @@ class ShallowNetwork(nn.Module):
         super().__init__()
         self.flatten = nn.Flatten()
         self.fc1 = nn.Linear(784, 16)
-        self.fc2 = nn.Linear(16, 16)
-        self.fc3 = nn.Linear(16, 10)
+        self.fc2 = nn.Linear(16, 10)
         self.softmax = nn.Softmax(dim=1)
 
     def forward(self, x):
@@ -51,10 +50,8 @@ class ShallowNetwork(nn.Module):
         Z1 = self.fc1(x)
         # print("Z1:", Z1.shape)
         A1 = torch.relu(Z1)
-        Z2 = self.fc2(A1)
-        A2 = torch.relu(Z2)
         # print("A1:", A1.shape)
-        logits = self.fc2(A2)
+        logits = self.fc2(A1)
         # print("logits:", logits)
         # prob_dist = self.softmax(logits)
         return logits
@@ -103,3 +100,5 @@ for t in range(epochs):
     train(train_dataloader, predictor, loss_fn, optimizer)
     test(test_dataloader, predictor, loss_fn)
 print("Done!")
+
+torch.save(predictor.state_dict(), "predictors/fashionMNIST_shallow_nn_predictor.pth")
