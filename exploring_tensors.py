@@ -33,6 +33,7 @@ tns.to("mps")
 device = torch.accelerator.current_accelerator().type if torch.accelerator.is_available() else "cpu"
 # %%
 tns.to(device)
+tns = tns.to(device)
 tns.device
 # %%
 tns2 = torch.rand(4,4)
